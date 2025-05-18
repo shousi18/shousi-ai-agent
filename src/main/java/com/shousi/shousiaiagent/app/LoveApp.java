@@ -116,9 +116,9 @@ public class LoveApp {
                 // 开启日志
                 .advisors(new MyLoggerAdvisor())
                 // 应用知识问答库（基于本地知识库）
-//                .advisors(new QuestionAnswerAdvisor(loadAppVectorStore))
+                .advisors(new QuestionAnswerAdvisor(loadAppVectorStore))
                 // 应用云知识库服务（基于阿里云云百炼知识库）
-                .advisors(loveAppRagCloudAdvisor)
+//                .advisors(loveAppRagCloudAdvisor)
                 // 应用 RAG 检索增强服务（基于 PgVector 向量存储）
 //                .advisors(new QuestionAnswerAdvisor(pgVectorStore))
                 // 应用 RAG 检索增强服务（自定义）
