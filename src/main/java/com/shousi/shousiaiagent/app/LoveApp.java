@@ -1,6 +1,7 @@
 package com.shousi.shousiaiagent.app;
 
 import com.shousi.shousiaiagent.advisor.MyLoggerAdvisor;
+import com.shousi.shousiaiagent.advisor.ReReadingAdvisor;
 import com.shousi.shousiaiagent.chatMemory.FileBasedChatMemory;
 import com.shousi.shousiaiagent.rag.LoveAppRagCustomAdvisorFactory;
 import com.shousi.shousiaiagent.rag.QueryRewriter;
@@ -41,8 +42,8 @@ public class LoveApp {
                 .defaultSystem(SYSTEM_PROMPT)
                 .defaultAdvisors(
                         new MessageChatMemoryAdvisor(chatMemory),
-                        new MyLoggerAdvisor()
-//                        new ReReadingAdvisor()
+                        new MyLoggerAdvisor(),
+                        new ReReadingAdvisor()
                 )
                 .build();
     }
