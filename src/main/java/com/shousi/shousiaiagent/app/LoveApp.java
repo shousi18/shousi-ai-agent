@@ -42,8 +42,8 @@ public class LoveApp {
                 .defaultSystem(SYSTEM_PROMPT)
                 .defaultAdvisors(
                         new MessageChatMemoryAdvisor(chatMemory),
-                        new MyLoggerAdvisor(),
-                        new ReReadingAdvisor()
+                        new MyLoggerAdvisor()
+//                        new ReReadingAdvisor()
                 )
                 .build();
     }
@@ -120,13 +120,13 @@ public class LoveApp {
                 // 应用云知识库服务（基于阿里云云百炼知识库）
 //                .advisors(loveAppRagCloudAdvisor)
                 // 应用 RAG 检索增强服务（基于 PgVector 向量存储）
-//                .advisors(new QuestionAnswerAdvisor(pgVectorStore))
+                .advisors(new QuestionAnswerAdvisor(pgVectorStore))
                 // 应用 RAG 检索增强服务（自定义）
-                .advisors(
-                        LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
-                                loadAppVectorStore, "单身"
-                        )
-                )
+//                .advisors(
+//                        LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
+//                                loadAppVectorStore, "单身"
+//                        )
+//                )
                 .call()
                 .chatResponse();
         String content = chatResponse.getResult().getOutput().getText();
