@@ -99,17 +99,17 @@ public class LoveApp {
     @Resource
     private VectorStore pgVectorStore;
 
-//    @Resource
-//    private QueryRewriter queryRewriter;
+    @Resource
+    private QueryRewriter queryRewriter;
 
     public String doChatWithRag(String message, String chatId) {
         // 执行查询重写器，进行查询重写
-//        String rewrittenMessage = queryRewriter.doQueryRewrite(message);
+        String rewrittenMessage = queryRewriter.doQueryRewrite(message);
 
         ChatResponse chatResponse = chatClient
                 .prompt()
-//                .user(rewrittenMessage)
-                .user(message)
+                .user(rewrittenMessage)
+//                .user(message)
                 .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                 // 开启日志
