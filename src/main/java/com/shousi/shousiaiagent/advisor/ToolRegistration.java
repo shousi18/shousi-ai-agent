@@ -30,4 +30,11 @@ public class ToolRegistration {
                 weatherTools
         );
     }
+
+    @Bean
+    public ToolCallback[] serviceTools(SearchViolateMerchantInfoTool searchViolateMerchantInfoTool) {
+        return ToolCallbacks.from(
+                searchViolateMerchantInfoTool
+        );
+    }
 }

@@ -1,10 +1,10 @@
 package com.shousi.shousiaiagent.app;
 
 import com.shousi.shousiaiagent.advisor.MyLoggerAdvisor;
-import com.shousi.shousiaiagent.advisor.ReReadingAdvisor;
 import com.shousi.shousiaiagent.chatMemory.FileBasedChatMemory;
-import com.shousi.shousiaiagent.rag.LoveAppRagCustomAdvisorFactory;
+import com.shousi.shousiaiagent.model.entity.Merchant2;
 import com.shousi.shousiaiagent.rag.QueryRewriter;
+import com.shousi.shousiaiagent.service.Merchant2Service;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -16,9 +16,11 @@ import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY;
@@ -146,6 +148,25 @@ public class LoveApp {
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                 .advisors(new MyLoggerAdvisor())
                 .tools(allTools)
+                .call()
+                .chatResponse();
+        String content = chatResponse.getResult().getOutput().getText();
+        log.info("content: {}", content);
+        return content;
+    }
+
+    @Resource
+    private ToolCallback[] serviceTools;
+
+    public String doChatWithServiceTools(String message, String chatId) {
+
+        ChatResponse chatResponse = chatClient
+                .prompt()
+                .user(message)
+                .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
+                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
+                .advisors(new MyLoggerAdvisor())
+                .tools(serviceTools)
                 .call()
                 .chatResponse();
         String content = chatResponse.getResult().getOutput().getText();
