@@ -15,9 +15,15 @@ spring:
         distance-type: COSINE_DISTANCE
         max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
   datasource:
-    url: your url
-    username: your username
-    password: your password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/excel_test?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+  # 阿里云的pg向量数据库
+#  datasource:
+#    url: your url
+#    username: your username
+#    password: your password
 # springdoc-openapi项目配置
 springdoc:
   swagger-ui:
@@ -40,3 +46,7 @@ logging:
     org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: debug
 searchapi:
   api-key: Your api-key
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
