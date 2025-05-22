@@ -68,11 +68,13 @@ public class FileBasedChatMemory implements ChatMemory {
     private List<Message> getOrCreateConversation(String conversationId) {
         File file = getConversationFile(conversationId);
         List<Message> messages = new ArrayList<>();
-        try (FileInputStream fis = new FileInputStream(file);
-             Input input = new Input(fis)) {
-            messages = kryo.readObject(input, ArrayList.class);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (file.exists()) {
+            try (FileInputStream fis = new FileInputStream(file);
+                 Input input = new Input(fis)) {
+                messages = kryo.readObject(input, ArrayList.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return messages;
     }
